@@ -52,30 +52,30 @@ AWS.config.update({
 
 // var params = {
 
-//     TableName : 'Events',
-//     KeySchema : [
+//     TableName: 'Events',
+//     KeySchema: [
 //         {
-//             AttributeName : 'userId', //primary key
-//             KeyType : 'HASH',
+//             AttributeName: 'userId', //primary key
+//             KeyType: 'HASH',
 //         },
 //         {
-//             AttributeName : 'id', //sort key
-//             KeyType : 'RANGE',
+//             AttributeName: 'id', //sort key
+//             KeyType: 'RANGE',
 //         }
 //     ],
-//     AttributeDefinitions : [
+//     AttributeDefinitions: [
 //         {
 //             AttributeName: 'userId',
 //             AttributeType: 'S',
 //         },
 //         {
-//             AttributeName : 'id',
-//             AttributeType : 'S',
+//             AttributeName: 'id',
+//             AttributeType: 'S',
 //         },
 //     ],
-//     ProvisionedThroughput : {
-//         ReadCapacityUnits : 10,
-//         WriteCapacityUnits : 10,
+//     ProvisionedThroughput: {
+//         ReadCapacityUnits: 10,
+//         WriteCapacityUnits: 10,
 //     },
 // };
 
@@ -95,11 +95,11 @@ AWS.config.update({
 //     TableName: 'Slots',
 //     KeySchema: [
 //         {
-//             AttributeName: 'eventId',
+//             AttributeName: 'eventId', //primary key
 //             KeyType: 'HASH',
 //         },
 //         {
-//             AttributeName: 'id',
+//             AttributeName: 'id', //sort key
 //             KeyType: 'RANGE',
 //         },
 //     ],

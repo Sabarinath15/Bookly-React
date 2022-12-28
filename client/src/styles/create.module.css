@@ -158,7 +158,7 @@
   border: none;
   margin-bottom: 2px;
   text-indent: 10px;
-  color: var(--gray-text-dark);
+  color: var(--text);
   font-weight: 500;
   box-sizing: border-box;
   border-bottom: 1px solid var(--primary-lite);
@@ -358,6 +358,9 @@ textarea:focus + p {
   font-weight: 500;
   margin-left: 20px;
   border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .buttons button:hover {
@@ -373,4 +376,46 @@ textarea:focus + p {
   width: 100%;
   color: #f44336;
   font-size: 0.8rem;
+}
+
+.helptext {
+  margin: 20px 0;
+  text-align: center;
+  color: #f44336;
+  font-size: 0.9rem;
+}
+
+.alertContainer {
+  width: 100%;
+  min-height: calc(100vh - 120px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.alertContainer img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.alertContainer h1 {
+  font-weight: 500;
+  color: #4caf50;
+  margin-bottom: 40px;
+}
+
+.alertContainer p {
+  font-size: 1.2rem;
+  color: var(--gray-text-dark);
+  text-align: center;
+  width: 500px;
+  margin-bottom: 60px;
+}
+
+.alertContainer span {
+  font-size: 1rem;
+  color: var(--gray-text);
 }

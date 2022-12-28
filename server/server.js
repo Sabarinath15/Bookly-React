@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 
 const account = require('./routers/account'); //router for accounts login and signup
+const event = require('./routers/event'); //router for events
+const slots = require('./routers/slot'); //slots router
 
 //port
 const port = process.env.PORT || 4000;
@@ -17,9 +19,7 @@ const start = async () => {
 start();
 app.use(express.json());
 
-app.get('/item', async (req, res) => {
-    res.send("It is working");
-})
-
 //routers
 app.use('/api/account', account);
+app.use('/api/events', event);
+app.use('/api/slots', slots);

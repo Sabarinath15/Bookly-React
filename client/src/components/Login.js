@@ -76,6 +76,7 @@ export const Login = (props) => {
           axios.get(`/api/account/user/${inputs.email}`).then((res) => {
             var getPassword = res.data.data.Items[0].password;
             if (inputs.password === getPassword) {
+              sessionStorage.setItem('userId', JSON.stringify(res.data.data.Items[0].id));
               setWarning({});
               navigate("/dashboard");
             } else {

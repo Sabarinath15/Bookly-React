@@ -94,6 +94,7 @@ export const Signup = (props) => {
             "email": inputs.email,
             "password": inputs.password,
           }).then((res) => {
+            sessionStorage.setItem('userId', JSON.stringify(res.data.data.Items[0].id));
             setProcessing(false);
             setWarning({});
             navigate("/dashboard");
@@ -112,7 +113,6 @@ export const Signup = (props) => {
         setProcessing(false);
         console.log(error);
       }
-
     }
   };
   return (
