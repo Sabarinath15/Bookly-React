@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export const AdminEvents = ({ event, showDelete, showDetails }) => {
+export const AdminEvents = ({ event, showDelete, showDetails, clicked }) => {
   const details = event.event; //assigning the events to details
   const months = [
     "Jan",
@@ -95,10 +95,11 @@ export const AdminEvents = ({ event, showDelete, showDetails }) => {
   //show details of the event
   const detailsTrigger = () => {
     showDetails(event.id);
+
   }
 
   return (
-    <div className={dashboard.event}>
+    <div className={dashboard.event} style={clicked ? { backgroundColor: "#F5F5F5", order: -1, boxShadow: "none" } : {}}>
       <div className={dashboard.top}>
         <div className={dashboard.titleinfo}>
           <h3>{details.name}</h3>

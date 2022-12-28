@@ -9,6 +9,7 @@ import { AdminEvents } from "./AdminEvent";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Slots } from "./Slots";
 
 export const DashboardEvents = () => {
   //useeffect for fetch data
@@ -25,24 +26,23 @@ export const DashboardEvents = () => {
   const [deleteStatus, setDeleteStatus] = useState({}); //delete status state
   const [details, setDetails] = useState(false); //details show state
   const [detailsProcess, setDetailsProcess] = useState(true); //details processing state
-  const [eventDetials, setEventDetails] = useState({});
+  const [eventDetials, setEventDetails] = useState({}); //event details state
+  const [slotsDetails, setSlotDetails] = useState([]); //slots details state
 
   const navigate = useNavigate(); //navigate router
 
   //fetching the events by api
   const fetchEvents = async () => {
     var userId = await JSON.parse(sessionStorage.getItem("userId"));
-    setTimeout(() => {
-      axios
-        .get(`/api/events/${userId}`)
-        .then((res) => {
-          sortEvent(res.data.data.Items);
-        })
-        .catch((err) => {
-          setProcessing(false);
-          console.log(err);
-        });
-    }, 1500);
+    axios
+      .get(`/api/events/${userId}`)
+      .then((res) => {
+        sortEvent(res.data.data.Items);
+      })
+      .catch((err) => {
+        setProcessing(false);
+        console.log(err);
+      });
   };
 
   //sort the events
@@ -54,8 +54,10 @@ export const DashboardEvents = () => {
         ? -1
         : 0
     );
-    setProcessing(false);
-    setEventsData(events);
+    setTimeout(() => {
+      setProcessing(false);
+      setEventsData(events);
+    }, 1000);
   };
 
   //hide popups
@@ -63,6 +65,7 @@ export const DashboardEvents = () => {
     showPopup(false);
     setDeleteStatus({});
     setProcessing(true);
+    setEventId("");
     fetchEvents();
   };
 
@@ -85,9 +88,12 @@ export const DashboardEvents = () => {
               main: "Event deleted successfully",
               sub: "This event can no more accessible.",
             });
+            setDetails(false);
+            setEventId("");
           });
         } else {
           setDeleteProcess(false);
+          setEventId("");
           setDeleteStatus({
             main: "Can't delete this event.",
             sub: "This event Have some Booked slots, so can't delete this.",
@@ -101,6 +107,7 @@ export const DashboardEvents = () => {
 
   //show details of the event
   const showDetails = async (eventId) => {
+    setEventId(eventId);
     setDetails(true);
     setDetailsProcess(true);
     var userId = await JSON.parse(sessionStorage.getItem("userId"));
@@ -109,7 +116,7 @@ export const DashboardEvents = () => {
         setEventDetails(res.data.data.Item);
       });
       axios.get(`/api/slots/${eventId}`).then((res) => {
-        //todo: create a slot component and fetch
+        setSlotDetails(res.data.data.Items);
       });
       setTimeout(() => {
         setDetailsProcess(false);
@@ -122,6 +129,7 @@ export const DashboardEvents = () => {
   //hideDetails
   const hideDetails = () => {
     setDetails(false);
+    setEventId("");
   };
 
   //Generating the list of events
@@ -131,6 +139,7 @@ export const DashboardEvents = () => {
       event={event}
       showDelete={showDelete}
       showDetails={showDetails}
+      clicked={eventId === event.id}
     />
   ));
 
@@ -198,6 +207,16 @@ export const DashboardEvents = () => {
                       eventDetails={eventDetials}
                       hideDetails={hideDetails}
                     />
+                    <div className={dashboard.slotsContainer}>
+                      {slotsDetails.length === 0 ? (
+                        <div className={dashboard.emptySlots}>
+                          <h2>No booked slots!</h2>
+                          <p>No slots are booked in this event.</p>
+                        </div>
+                      ) : (
+                        <Slots slotsDetails={slotsDetails} />
+                      )}
+                    </div>
                   </>
                 )}
               </div>
