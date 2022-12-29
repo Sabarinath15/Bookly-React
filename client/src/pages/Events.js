@@ -10,6 +10,7 @@ import axios from "axios";
 
 export const Events = () => {
   const [events, setEvents] = useState([]);
+  const [serachResult, setSearchResult] = useState([]);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(false);
 
@@ -37,13 +38,26 @@ export const Events = () => {
 
   //handle inputs of the search box
   const handleSearch = (e) => {
-    console.log(e.target.value);
+    var keyword = e.target.value;
+    if (keyword !== "") {
+      var temp = events.filter((item) =>
+        item.event.name.toLowerCase().startsWith(keyword.toLowerCase())
+      );
+      setSearchResult(temp);
+    } else {
+      setSearchResult([]);
+    }
   };
 
   //generating the events
-  const EventTile = events.map((event) => {
-    return <Event key={event.id} event={event} />;
-  });
+  const EventTile =
+    serachResult.length > 0
+      ? serachResult.map((event) => {
+          return <Event key={event.id} event={event} />;
+        })
+      : events.map((event) => {
+          return <Event key={event.id} event={event} />;
+        });
 
   return (
     <div className={eventStyle.main}>

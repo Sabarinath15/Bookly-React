@@ -2,7 +2,11 @@ import eventStyle from "../styles/event.module.css";
 
 import { BiBuildings } from "react-icons/bi";
 
+import { useNavigate } from "react-router-dom";
+
 export const Event = ({ event }) => {
+  const navigate = useNavigate(); //navigate router
+
   const details = event.event;
   const months = [
     "Jan",
@@ -19,6 +23,29 @@ export const Event = ({ event }) => {
     "Dec",
   ];
 
+  //get end date
+  const getEndDate = () => {
+    var startDate = new Date(details.date);
+    startDate = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+    var milisec =
+      parseInt(details.days) * 1000 * 3600 * 24 + startDate.getTime();
+    var endDate = new Date(milisec);
+    return `${new Date(endDate).getDate()} ${
+      months[new Date(endDate).getMonth()]
+    } ${new Date(endDate).getFullYear()}`;
+  };
+
+  //navigate to booking page
+  const navToBooking = () => {
+    sessionStorage.setItem("eventId", JSON.stringify(event.id));
+    sessionStorage.setItem("userId", JSON.stringify(event.userId));
+    navigate("/booking");
+  };
+
   return (
     <div className={eventStyle.event}>
       <div className={eventStyle.title}>
@@ -29,7 +56,8 @@ export const Event = ({ event }) => {
         <p>
           <span>
             <BiBuildings />
-          </span>{" "}
+          </span>
+          {details.orgName || ""}
         </p>
       </div>
       <div className={eventStyle.content}>
@@ -45,13 +73,11 @@ export const Event = ({ event }) => {
           </div>
           <div>
             <h4>Available till</h4>
-            <p>{`${new Date(details.date).getDate()} ${
-              months[new Date(details.date).getMonth()]
-            } ${new Date(details.date).getFullYear()}`}</p>
+            <p>{getEndDate()}</p>
           </div>
         </div>
         <div className={eventStyle.button}>
-          <button>Book Now</button>
+          <button onClick={navToBooking}>Book Now</button>
         </div>
       </div>
     </div>
