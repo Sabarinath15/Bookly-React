@@ -99,7 +99,7 @@ export const AdminEvents = ({ event, showDelete, showDetails, clicked }) => {
   }
 
   return (
-    <div className={dashboard.event} style={clicked ? { backgroundColor: "#F5F5F5", order: -1, boxShadow: "none" } : {}}>
+    <div className={dashboard.event} style={clicked ? { backgroundColor: "#F5F5F5", boxShadow: "none" } : {}}>
       <div className={dashboard.top}>
         <div className={dashboard.titleinfo}>
           <h3>{details.name}</h3>
