@@ -1,14 +1,15 @@
 import eventStyle from "../styles/event.module.css";
 
-import { Link } from "react-router-dom";
 import { TailSpin } from "react-loader-spinner";
-
 import { FiSearch } from "react-icons/fi";
 
+import { Link } from "react-router-dom";
 import { Event } from "../components/Event";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const Events = () => {
+  const [events, setEvents] = useState([]);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(false);
 
@@ -19,16 +20,30 @@ export const Events = () => {
   //fetch events
   const fetchEvents = () => {
     setProcessing(true);
-    setTimeout(() => {
+    try {
+      axios.get("/api/events/").then((res) => {
+        setEvents(res.data.data.Items);
+      });
+      setTimeout(() => {
+        setProcessing(false);
+        setError(false);
+      }, 1000);
+    } catch (error) {
+      console.log(error);
       setProcessing(false);
-      setError(false);
-    }, 0);
+      setError(true);
+    }
   };
 
   //handle inputs of the search box
   const handleSearch = (e) => {
     console.log(e.target.value);
   };
+
+  //generating the events
+  const EventTile = events.map((event) => {
+    return <Event key={event.id} event={event} />;
+  });
 
   return (
     <div className={eventStyle.main}>
@@ -77,17 +92,7 @@ export const Events = () => {
                 </div>
               </div>
             ) : (
-              <>
-                <Event />
-                <Event />
-                <Event />
-                <Event />
-                <Event />
-                <Event />
-                <Event />
-                <Event />
-                <Event />
-              </>
+              <>{EventTile}</>
             )}
           </div>
         )}

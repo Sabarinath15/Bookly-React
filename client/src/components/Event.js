@@ -1,36 +1,59 @@
 import eventStyle from "../styles/event.module.css";
 
-import { BsFillClockFill, BsFillCalendarEventFill } from "react-icons/bs";
+import { BiBuildings } from "react-icons/bi";
 
-export const Event = () => {
-  return <div className={eventStyle.event}></div>;
-};
+export const Event = ({ event }) => {
+  const details = event.event;
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <div className={eventStyle.mode}>
-        <p>Online</p>
-      </div>
+  return (
+    <div className={eventStyle.event}>
       <div className={eventStyle.title}>
-        <h3>Event name</h3>
-        <p>Organisation name</p>
-      </div>
-      <div className={eventStyle.details}>
+        <div>
+          <span>Event on</span>
+          <h2>{details.name || ""}</h2>
+        </div>
         <p>
           <span>
-            <BsFillClockFill />
-          </span>
-          30 Minutes
+            <BiBuildings />
+          </span>{" "}
         </p>
-        <p>
-          <span>
-            <BsFillCalendarEventFill />
-          </span>
+      </div>
+      <div className={eventStyle.content}>
+        {details.meetType === "online" ? (
+          <p style={{ color: "#00c853" }}>Online</p>
+        ) : (
+          <p style={{ color: "#FF3D00" }}>Offline</p>
+        )}
+        <div className={eventStyle.details}>
           <div>
-            <h5>Available till</h5>
-            <p>29 Dec 2022</p>
+            <h4>Duration</h4>
+            <p>{`${details.duration} ${details.durationFormat}`}</p>
           </div>
-        </p>
+          <div>
+            <h4>Available till</h4>
+            <p>{`${new Date(details.date).getDate()} ${
+              months[new Date(details.date).getMonth()]
+            } ${new Date(details.date).getFullYear()}`}</p>
+          </div>
+        </div>
+        <div className={eventStyle.button}>
+          <button>Book Now</button>
+        </div>
       </div>
-      <button>Book Now</button> */
-}
+    </div>
+  );
+};
