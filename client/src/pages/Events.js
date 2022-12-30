@@ -21,6 +21,8 @@ export const Events = () => {
   //fetch events
   const fetchEvents = () => {
     setProcessing(true);
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("eventId");
     try {
       axios.get("/api/events/").then((res) => {
         setEvents(res.data.data.Items);
@@ -53,11 +55,11 @@ export const Events = () => {
   const EventTile =
     serachResult.length > 0
       ? serachResult.map((event) => {
-          return <Event key={event.id} event={event} />;
-        })
+        return <Event key={event.id} event={event} />;
+      })
       : events.map((event) => {
-          return <Event key={event.id} event={event} />;
-        });
+        return <Event key={event.id} event={event} />;
+      });
 
   return (
     <div className={eventStyle.main}>

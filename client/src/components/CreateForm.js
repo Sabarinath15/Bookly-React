@@ -161,7 +161,7 @@ export const CreateForm = ({ setCreated }) => {
     if (inputs.date === "") {
       err = { ...err, dateError: "Please enter a value." };
     } else if (
-      new Date(inputs.date).toString().substring(0, 15) >=
+      new Date(inputs.date).toString().substring(0, 15) <
       new Date().toString().substring(0, 15)
     ) {
       err = { ...err, dateError: "Date must not be in past." };
