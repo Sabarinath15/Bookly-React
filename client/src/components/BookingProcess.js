@@ -40,9 +40,8 @@ export const BookingProcess = ({ event }) => {
     var milisec =
       parseInt(details.days) * 1000 * 3600 * 24 + startDate.getTime();
     var endDate = new Date(milisec);
-    return `${new Date(endDate).getDate()} ${
-      months[new Date(endDate).getMonth()]
-    } ${new Date(endDate).getFullYear()}`;
+    return `${new Date(endDate).getDate()} ${months[new Date(endDate).getMonth()]
+      } ${new Date(endDate).getFullYear()}`;
   };
 
   return (
@@ -84,6 +83,8 @@ export const BookingProcess = ({ event }) => {
           </p>
         </div>
       </div>
+
+      {/* Process of the booking */}
       <div className={style.process}>
         <div className={style.processbar}>
           <div className={steps === "DateTime" ? style.onStep : style.step}>
