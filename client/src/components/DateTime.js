@@ -1,5 +1,7 @@
 import style from "../styles/booking.module.css";
 
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+
 //import { useState } from "react";
 
 export const DateTime = ({ handleStep }) => {
@@ -9,10 +11,17 @@ export const DateTime = ({ handleStep }) => {
     <div className={style.outer}>
       <div className={style.DateTime}>
         <div className={style.calendarContainer}>
+          <div className={style.helptext}>
+            <p>Select a Date</p>
+          </div>
           <div className={style.navigation}>
-            <button>prev</button>
+            <button>
+              <FaAngleLeft />
+            </button>
             <p>Dec 2023</p>
-            <button>next</button>
+            <button>
+              <FaAngleRight />
+            </button>
           </div>
           <div className={style.weekDays}>
             <li>Sun</li>
@@ -23,6 +32,7 @@ export const DateTime = ({ handleStep }) => {
             <li>Fri</li>
             <li>Sat</li>
           </div>
+          <div className={style.days}></div>
         </div>
       </div>
       <div className={style.buttons}>
