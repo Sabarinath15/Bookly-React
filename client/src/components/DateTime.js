@@ -2,10 +2,23 @@ import style from "../styles/booking.module.css";
 
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
-//import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const DateTime = ({ handleStep }) => {
-  //const [date, onDateChange] = useState(new Date());
+  useEffect(() => {
+    generateDate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [date, onDateChange] = useState(new Date());
+
+  //generate date
+  const generateDate = () => {
+    var firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    console.log(firstDayOfMonth, lastDayOfMonth);
+    //todo: generate the day to calendar
+  };
 
   return (
     <div className={style.outer}>
@@ -18,7 +31,7 @@ export const DateTime = ({ handleStep }) => {
             <button>
               <FaAngleLeft />
             </button>
-            <p>Dec 2023</p>
+            <p>December 2023</p>
             <button>
               <FaAngleRight />
             </button>
