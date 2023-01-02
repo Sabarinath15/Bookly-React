@@ -25,6 +25,7 @@ export const BookingProcess = ({ event }) => {
 
   const [steps, setSteps] = useState("DateTime");
   const [dateTime, setDateTime] = useState({});
+  const [customerDetails, setCustomerDetails] = useState({});
 
   //setting the step
   const handleStep = (value) => {
@@ -54,7 +55,13 @@ export const BookingProcess = ({ event }) => {
     })
   }
 
+  //save the customer details
+  const saveCustomerDetails = (value) => {
+    setCustomerDetails(value);
+  }
+
   console.log(dateTime);
+  console.log(customerDetails);
   return (
     <div className={style.bookingContainer}>
       <div className={style.detail}>
@@ -115,7 +122,7 @@ export const BookingProcess = ({ event }) => {
         </div>
         <div className={style.mainContainer}>
           {steps === "DateTime" && <DateTime event={details} handleStep={handleStep} saveDateTime={saveDateTime} />}
-          {steps === "CustomerDetails" && <CustomerDetails handleStep={handleStep} />}
+          {steps === "CustomerDetails" && <CustomerDetails handleStep={handleStep} saveCustomerDetails={saveCustomerDetails} />}
           {steps === "Confirm" && (
             <div className={style.outer}>
               <div className={style.Confirm}>Confirm</div>
