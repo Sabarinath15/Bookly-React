@@ -5,7 +5,7 @@ import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-export const DateTime = ({ handleStep, event }) => {
+export const DateTime = ({ handleStep, event, saveDateTime }) => {
   //console.log(event);
   const months = [
     "January",
@@ -32,6 +32,8 @@ export const DateTime = ({ handleStep, event }) => {
   const [dateArray, setDateArray] = useState([]); //month date array for generate calendar
   const [endDate, setEndDate] = useState(new Date()); //end date of the event
   const [selectedDate, setSelectedDate] = useState(0); //selected date of the calendar
+  const [timeArray, setTimeArray] = useState([]); //slots time array for gen. slots
+  const [selectedTime, setSelectedTime] = useState(""); //seleced time of the slots
 
   //generate date
   const generateCalendar = () => {
@@ -65,10 +67,12 @@ export const DateTime = ({ handleStep, event }) => {
     var temp = date;
     if (direction === "prev" && temp.getMonth() - 1 >= new Date().getMonth()) {
       setDate(new Date(temp.setMonth(temp.getMonth() - 1)));
+      setSelectedDate(0);
       generateCalendar();
     }
     if (direction === "next" && temp.getMonth() + 1 <= endDate.getMonth()) {
       setDate(new Date(temp.setMonth(temp.getMonth() + 1)));
+      setSelectedTime("");
       generateCalendar();
     }
   };
@@ -111,6 +115,7 @@ export const DateTime = ({ handleStep, event }) => {
           }
           onClick={() => {
             setSelectedDate(value);
+            generateSlots(value);
           }}
         >
           {value}
@@ -129,6 +134,62 @@ export const DateTime = ({ handleStep, event }) => {
       return createDateElement(item);
     }
   });
+
+  //time
+  //generating the time slots
+  const generateSlots = (value) => {
+    var pickedDate = new Date(date.getFullYear(), date.getMonth(), value);
+    var startString =
+      event.timing[pickedDate.toString().substring(0, 3).toLowerCase()].start;
+    var endString =
+      event.timing[pickedDate.toString().substring(0, 3).toLowerCase()].end;
+    var startTime =
+      parseInt(startString.split(":")[0]) * 60 +
+      parseInt(startString.split(":")[1]);
+    var endTime =
+      parseInt(endString.split(":")[0]) * 60 +
+      parseInt(endString.split(":")[1]);
+    var duartion = parseInt(event.duration);
+    var timeArray = [];
+    for (let i = startTime; i < endTime; i += duartion) {
+      timeArray.push(i);
+    }
+    setTimeArray(timeArray);
+  };
+
+  //create the time slot
+  const createSlot = (time) => {
+    var hour =
+      Math.trunc(time / 60) > 12
+        ? Math.trunc(time / 60) - 12
+        : Math.trunc(time / 60);
+    hour = hour < 10 ? "0" + hour : hour;
+    var minutes = time % 60 === 0 ? "0" + (time % 60) : time % 60;
+    return (
+      <li
+        key={time}
+        style={
+          selectedTime === `${hour}:${minutes} ${time < 720 ? "AM" : "PM"}`
+            ? {
+                color: "#2962ff",
+                cursor: "pointer",
+                fontWeight: "600",
+                backgroundColor: "#E3F2FD",
+              }
+            : {}
+        }
+        onClick={() => {
+          setSelectedTime(`${hour}:${minutes} ${time < 720 ? "AM" : "PM"}`);
+        }}
+      >
+        {`${hour}:${minutes}`}
+        <span>{time < 720 ? "AM" : "PM"}</span>
+      </li>
+    );
+  };
+
+  //generating the elements by map
+  const TimeElements = timeArray.map((item) => createSlot(item));
 
   return (
     <div className={style.outer}>
@@ -157,11 +218,30 @@ export const DateTime = ({ handleStep, event }) => {
           </div>
           <div className={style.days}>{DateElement}</div>
         </div>
+        <div className={style.timeContainer}>
+          {selectedDate ? (
+            <>
+              <div className={style.helptext}>
+                <p>Select a slot</p>
+              </div>
+              <div className={style.slots}>{TimeElements}</div>
+            </>
+          ) : (
+            <div className={style.timehelp}>
+              <p>Select a date to view time slots.</p>
+            </div>
+          )}
+        </div>
       </div>
       <div className={style.buttons}>
         <button
           className={style.nextBtn}
+          disabled={selectedDate === 0 || selectedTime === "" ? true : false}
           onClick={() => {
+            saveDateTime(
+              new Date(date.getFullYear(), date.getMonth(), selectedDate),
+              selectedTime
+            );
             handleStep("CustomerDetails");
           }}
         >

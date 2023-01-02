@@ -4,6 +4,7 @@ import { BiBuildings } from "react-icons/bi";
 import { useState } from "react";
 
 import { DateTime } from "./DateTime";
+import { CustomerDetails } from "./CustomerDetails";
 
 export const BookingProcess = ({ event }) => {
   const details = event.event;
@@ -23,6 +24,7 @@ export const BookingProcess = ({ event }) => {
   ];
 
   const [steps, setSteps] = useState("DateTime");
+  const [dateTime, setDateTime] = useState({});
 
   //setting the step
   const handleStep = (value) => {
@@ -44,6 +46,15 @@ export const BookingProcess = ({ event }) => {
       } ${new Date(endDate).getFullYear()}`;
   };
 
+  //save the date and time get form the DateTime
+  const saveDateTime = (date, time) => {
+    setDateTime({
+      date: date,
+      time: time,
+    })
+  }
+
+  console.log(dateTime);
   return (
     <div className={style.bookingContainer}>
       <div className={style.detail}>
@@ -103,30 +114,8 @@ export const BookingProcess = ({ event }) => {
           </div>
         </div>
         <div className={style.mainContainer}>
-          {steps === "DateTime" && <DateTime event={details} handleStep={handleStep} />}
-          {steps === "CustomerDetails" && (
-            <div className={style.outer}>
-              <div className={style.Customer}>Customer details</div>
-              <div className={style.buttons}>
-                <button
-                  onClick={() => {
-                    handleStep("DateTime");
-                  }}
-                  className={style.backBtn}
-                >
-                  Back
-                </button>
-                <button
-                  className={style.nextBtn}
-                  onClick={() => {
-                    handleStep("Confirm");
-                  }}
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-          )}
+          {steps === "DateTime" && <DateTime event={details} handleStep={handleStep} saveDateTime={saveDateTime} />}
+          {steps === "CustomerDetails" && <CustomerDetails handleStep={handleStep} />}
           {steps === "Confirm" && (
             <div className={style.outer}>
               <div className={style.Confirm}>Confirm</div>
