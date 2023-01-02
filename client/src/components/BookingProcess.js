@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { DateTime } from "./DateTime";
 import { CustomerDetails } from "./CustomerDetails";
+import { ConfirmBooking } from "./ConfirmBooking";
 
 export const BookingProcess = ({ event }) => {
   const details = event.event;
@@ -117,7 +118,7 @@ export const BookingProcess = ({ event }) => {
           </div>
           <div className={steps === "Confirm" ? style.onStep : style.step}>
             <span>3</span>
-            <p>Confirm Appointment</p>
+            <p>Confirm Booking</p>
           </div>
         </div>
         <div className={style.mainContainer}>
@@ -125,7 +126,7 @@ export const BookingProcess = ({ event }) => {
           {steps === "CustomerDetails" && <CustomerDetails handleStep={handleStep} saveCustomerDetails={saveCustomerDetails} />}
           {steps === "Confirm" && (
             <div className={style.outer}>
-              <div className={style.Confirm}>Confirm</div>
+              <div className={style.Confirm}><ConfirmBooking dateTime={dateTime} customerDetails={customerDetails} /></div>
               <div className={style.buttons}>
                 <button
                   onClick={() => {
