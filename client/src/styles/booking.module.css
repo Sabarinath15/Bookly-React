@@ -316,7 +316,7 @@
 }
 
 .helptext {
-  height: 50px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -352,11 +352,11 @@
 .navigation p {
   font-size: 1.1rem;
   font-weight: 500;
-  color: var(--text);
+  color: var(--primary-color);
 }
 
 .weekDays {
-  margin-top: 5px;
+  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -368,5 +368,33 @@
   font-weight: 600;
   width: 60px;
   text-align: center;
-  background-color: #e0e0e0;
+}
+
+.days {
+  margin-top: 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  column-gap: 5px;
+  row-gap: 5px;
+}
+
+.days li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  border-radius: 50%;
+  color: #bdbdbd;
+  font-weight: 400;
+}
+
+.days li:hover {
+  background-color: #f5f5f5;
 }

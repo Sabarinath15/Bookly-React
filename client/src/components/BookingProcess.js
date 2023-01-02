@@ -103,7 +103,7 @@ export const BookingProcess = ({ event }) => {
           </div>
         </div>
         <div className={style.mainContainer}>
-          {steps === "DateTime" && <DateTime handleStep={handleStep} />}
+          {steps === "DateTime" && <DateTime event={details} handleStep={handleStep} />}
           {steps === "CustomerDetails" && (
             <div className={style.outer}>
               <div className={style.Customer}>Customer details</div>
