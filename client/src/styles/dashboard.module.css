@@ -784,3 +784,28 @@
   font-weight: 600;
   color: var(--gray-text-dark);
 }
+
+.profileContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.profileContainer img {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 50px;
+}
+
+.profileContainer h1 {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.profileContainer p {
+  font-weight: 600;
+  color: var(--text);
+}
