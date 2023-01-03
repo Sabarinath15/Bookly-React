@@ -295,6 +295,9 @@
   font-size: 1rem;
   letter-spacing: 1px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nextBtn:disabled {
@@ -521,5 +524,101 @@
 }
 
 .Confirm {
-  background-color: #82b1ff;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.confirmtitle {
+  height: 80px;
+}
+
+.confirmtitle h2 {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.confirmtitle p {
+  color: var(--gray-text);
+}
+
+.ticketContainer {
+  height: 300px;
+  display: flex;
+}
+
+.customerinfo {
+  width: 60%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.customerinfo div,
+.slotinfo div {
+  margin-top: 20px;
+}
+
+.customerinfo h3,
+.slotinfo h3 {
+  font-weight: 500;
+  color: var(--gray-text-dark);
+}
+
+.customerinfo p,
+.slotinfo p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-text);
+}
+
+.customerinfo h4,
+.slotinfo h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.slotinfo {
+  height: 100%;
+  width: 40%;
+}
+
+.success {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.success img {
+  margin-bottom: 20px;
+}
+
+.success h2 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #00c853;
+}
+
+.success p {
+  color: var(--gray-text-dark);
+}
+
+.error {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.error h2 {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.error p {
+  color: var(--gray-text-dark);
 }

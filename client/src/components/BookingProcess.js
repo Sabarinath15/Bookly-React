@@ -1,7 +1,10 @@
 import style from "../styles/booking.module.css";
 
 import { BiBuildings } from "react-icons/bi";
+import { TailSpin } from "react-loader-spinner";
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { DateTime } from "./DateTime";
 import { CustomerDetails } from "./CustomerDetails";
@@ -24,9 +27,13 @@ export const BookingProcess = ({ event }) => {
     "Dec",
   ];
 
+  const navigate = useNavigate(); //navigate router
+
   const [steps, setSteps] = useState("DateTime");
   const [dateTime, setDateTime] = useState({});
   const [customerDetails, setCustomerDetails] = useState({});
+  const [processing, setProcessing] = useState(false);
+  const [confirmStatus, setConfirmStatus] = useState("");
 
   //setting the step
   const handleStep = (value) => {
@@ -61,8 +68,28 @@ export const BookingProcess = ({ event }) => {
     setCustomerDetails(value);
   }
 
-  console.log(dateTime);
-  console.log(customerDetails);
+  //confirm booking
+  const confirmBooking = () => {
+    setProcessing(true);
+    axios.post('/api/slots/create', {
+      "eventId": event.id,
+      "userId": event.userId,
+      "name": customerDetails.name,
+      "email": customerDetails.email,
+      "mobileNumber": customerDetails.mobileNumber,
+      "date": dateTime.date,
+      "time": dateTime.time,
+    }).then(res => {
+      setConfirmStatus("success");
+      setProcessing(false);
+      setTimeout(() => {
+        navigate('/events');
+      }, 2000)
+    }).catch(err => {
+      setConfirmStatus("error");
+    });
+  }
+
   return (
     <div className={style.bookingContainer}>
       <div className={style.detail}>
@@ -126,8 +153,15 @@ export const BookingProcess = ({ event }) => {
           {steps === "CustomerDetails" && <CustomerDetails handleStep={handleStep} saveCustomerDetails={saveCustomerDetails} />}
           {steps === "Confirm" && (
             <div className={style.outer}>
-              <div className={style.Confirm}><ConfirmBooking dateTime={dateTime} customerDetails={customerDetails} /></div>
-              <div className={style.buttons}>
+              <div className={style.Confirm}>{confirmStatus === "" ? <ConfirmBooking dateTime={dateTime} customerDetails={customerDetails} /> : confirmStatus === "success" ? (<div className={style.success}>
+                <img src="\assets\images\booked.png" alt="Booked" />
+                <h2>Appiontment has been booked successfully.</h2>
+                <p>You will redirect to the home page automatically.</p>
+              </div>) : (<div className={style.error}>
+                <h2>Oops!...</h2>
+                <p>Something went wrong. Please try again.</p>
+              </div>)}</div>
+              {confirmStatus !== "success" && <div className={style.buttons}>
                 <button
                   onClick={() => {
                     handleStep("CustomerDetails");
@@ -136,8 +170,17 @@ export const BookingProcess = ({ event }) => {
                 >
                   Back
                 </button>
-                <button className={style.nextBtn}>Confirm</button>
-              </div>
+                <button className={style.nextBtn} onClick={confirmBooking} >{processing ? <TailSpin
+                  height="25"
+                  width="25"
+                  color="#fff"
+                  ariaLabel="tail-spin-loading"
+                  radius="1"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                /> : "Confirm"}</button>
+              </div>}
             </div>
           )}
         </div>

@@ -16,6 +16,7 @@ export const Events = () => {
 
   useEffect(() => {
     fetchEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //fetch events
@@ -25,7 +26,7 @@ export const Events = () => {
     sessionStorage.removeItem("eventId");
     try {
       axios.get("/api/events/").then((res) => {
-        setEvents(res.data.data.Items);
+        filterEvents(res.data.data.Items);
       });
       setTimeout(() => {
         setProcessing(false);
@@ -37,6 +38,29 @@ export const Events = () => {
       setError(true);
     }
   };
+
+  //get end date
+  const getEndDate = (date, days) => {
+    var startDate = new Date(date);
+    startDate = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+    var milisec =
+      parseInt(days) * 1000 * 3600 * 24 + startDate.getTime();
+    var endDate = new Date(milisec);
+    return endDate;
+  };
+
+  //filter the events by remove finished events
+  const filterEvents = (events) => {
+    var filtered = events.filter(item => {
+      var enddate = getEndDate(item.event.date, item.event.days);
+      return enddate > new Date();
+    });
+    setEvents(filtered);
+  }
 
   //handle inputs of the search box
   const handleSearch = (e) => {
