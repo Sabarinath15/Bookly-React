@@ -1,9 +1,5 @@
-// import dashboard from "../styles/dashboard.module.css";
+import style from "../styles/dashboard.module.css";
 
 export const Profile = () => {
-    return (
-        <>
-            <h1>Profile from components</h1>
-        </>
-    );
+  return <div className={style.profileContainer}></div>;
 };

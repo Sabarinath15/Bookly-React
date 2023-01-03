@@ -51,8 +51,8 @@ export const DashboardEvents = () => {
       val1.event.date > val2.event.date
         ? 1
         : val1.event.date < val2.event.date
-        ? -1
-        : 0
+          ? -1
+          : 0
     );
     setTimeout(() => {
       setProcessing(false);
@@ -116,7 +116,14 @@ export const DashboardEvents = () => {
         setEventDetails(res.data.data.Item);
       });
       axios.get(`/api/slots/${eventId}`).then((res) => {
-        setSlotDetails(res.data.data.Items);
+        var slots = res.data.data.Items.sort((val1, val2) =>
+          new Date(val1.slot.date) > new Date(val2.slot.date)
+            ? 1
+            : new Date(val1.slot.date) < new Date(val2.slot.date)
+              ? -1
+              : 0
+        );
+        setSlotDetails(slots);
       });
       setTimeout(() => {
         setDetailsProcess(false);
@@ -141,6 +148,11 @@ export const DashboardEvents = () => {
       showDetails={showDetails}
       clicked={eventId === event.id}
     />
+  ));
+
+  //generate the list of slots
+  const SlotsElement = slotsDetails.map(item => (
+    <Slots key={item.id} details={item} />
   ));
 
   return (
@@ -213,9 +225,9 @@ export const DashboardEvents = () => {
                           <h2>No booked slots!</h2>
                           <p>No slots are booked in this event.</p>
                         </div>
-                      ) : (
-                        <Slots slotsDetails={slotsDetails} />
-                      )}
+                      ) :
+                        SlotsElement
+                      }
                     </div>
                   </>
                 )}

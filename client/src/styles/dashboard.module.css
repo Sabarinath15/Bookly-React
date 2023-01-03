@@ -696,11 +696,18 @@
 }
 
 .slotsContainer {
-  height: 360px;
+  max-height: 360px;
   width: 100%;
   margin-top: 10px;
   box-sizing: border-box;
   padding: 10px;
+  padding-left: 40px;
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow-y: scroll;
 }
 
 .emptySlots {
@@ -715,4 +722,65 @@
 .emptySlots p {
   color: var(--gray-text-dark);
   font-size: 1rem;
+}
+
+.slot {
+  width: 400px;
+  height: 120px;
+  box-sizing: border-box;
+  padding: 5px;
+  border-radius: 10px;
+  display: flex;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 #e0e0e0;
+}
+
+.user {
+  width: 270px;
+  height: 100%;
+}
+
+.name {
+  height: 60px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text);
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.contact {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.contact a {
+  text-decoration: none;
+  font-size: 1.4rem;
+  color: var(--gray-text);
+}
+
+.contact a:hover {
+  color: var(--primary-color);
+}
+
+.usertime {
+  width: 120px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.usertime h2 {
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.usertime h4 {
+  font-weight: 600;
+  color: var(--gray-text-dark);
 }
