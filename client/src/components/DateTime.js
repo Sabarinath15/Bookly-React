@@ -4,9 +4,10 @@ import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
-export const DateTime = ({ handleStep, event, saveDateTime }) => {
-  //console.log(event);
+export const DateTime = ({ handleStep, eventDetails, saveDateTime }) => {
+  var event = eventDetails.event;
   const months = [
     "January",
     "February",
@@ -34,6 +35,7 @@ export const DateTime = ({ handleStep, event, saveDateTime }) => {
   const [selectedDate, setSelectedDate] = useState(0); //selected date of the calendar
   const [timeArray, setTimeArray] = useState([]); //slots time array for gen. slots
   const [selectedTime, setSelectedTime] = useState(""); //seleced time of the slots
+  const [bookedSlots, setBookedSlots] = useState([]); //booked slots of the selected day
 
   //generate date
   const generateCalendar = () => {
@@ -91,8 +93,7 @@ export const DateTime = ({ handleStep, event, saveDateTime }) => {
 
     if (
       thatDay <= endDate &&
-      (thatDay > new Date(event.date) ||
-        thatDay.toDateString() === new Date(event.date).toDateString())
+      thatDay > new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1)
     ) {
       if (availableDays.includes(thatDay.toDateString().substring(0, 3))) {
         isAvailable = true;
@@ -106,11 +107,11 @@ export const DateTime = ({ handleStep, event, saveDateTime }) => {
           style={
             selectedDate === value
               ? {
-                  color: "#2962ff",
-                  cursor: "pointer",
-                  fontWeight: "600",
-                  backgroundColor: "#E3F2FD",
-                }
+                color: "#2962ff",
+                cursor: "pointer",
+                fontWeight: "600",
+                backgroundColor: "#E3F2FD",
+              }
               : { color: "#2962ff", cursor: "pointer", fontWeight: "500" }
           }
           onClick={() => {
@@ -137,7 +138,7 @@ export const DateTime = ({ handleStep, event, saveDateTime }) => {
 
   //time
   //generating the time slots
-  const generateSlots = (value) => {
+  const generateSlots = async (value) => {
     var pickedDate = new Date(date.getFullYear(), date.getMonth(), value);
     var startString =
       event.timing[pickedDate.toString().substring(0, 3).toLowerCase()].start;
@@ -154,8 +155,25 @@ export const DateTime = ({ handleStep, event, saveDateTime }) => {
     for (let i = startTime; i < endTime; i += duartion) {
       timeArray.push(i);
     }
+    await fetchBookedSlots(value)
     setTimeArray(timeArray);
   };
+
+  //fetch the booked slots
+  const fetchBookedSlots = async (dateValue) => {
+    var tempDate = new Date(date.getFullYear(), date.getMonth(), dateValue);
+    var tempArray = [];
+    axios.get(`/api/slots/${eventDetails.id}`).then(res => {
+      tempArray = res.data.data.Items.map(item => {
+        if (tempDate.toDateString() === new Date(item.slot.date).toDateString()) {
+          return item.slot.time;
+        } else {
+          return null;
+        }
+      });
+      setBookedSlots(tempArray);
+    })
+  }
 
   //create the time slot
   const createSlot = (time) => {
@@ -165,27 +183,44 @@ export const DateTime = ({ handleStep, event, saveDateTime }) => {
         : Math.trunc(time / 60);
     hour = hour < 10 ? "0" + hour : hour;
     var minutes = time % 60 === 0 ? "0" + (time % 60) : time % 60;
-    return (
-      <li
-        key={time}
-        style={
-          selectedTime === `${hour}:${minutes} ${time < 720 ? "AM" : "PM"}`
-            ? {
+    if (bookedSlots.includes(`${hour}:${minutes} ${time < 720 ? "AM" : "PM"}`)) {
+      return (
+        <li
+          key={time}
+          style={{
+            color: "#2962ff",
+            fontWeight: "600",
+            backgroundColor: "#E3F2FD",
+            pointerEvents: "none"
+          }}
+        >
+          {`${hour}:${minutes}`}
+          <span>{time < 720 ? "AM" : "PM"}</span>
+        </li>
+      );
+    } else {
+      return (
+        <li
+          key={time}
+          style={
+            selectedTime === `${hour}:${minutes} ${time < 720 ? "AM" : "PM"}`
+              ? {
                 color: "#2962ff",
                 cursor: "pointer",
                 fontWeight: "600",
                 backgroundColor: "#E3F2FD",
               }
-            : {}
-        }
-        onClick={() => {
-          setSelectedTime(`${hour}:${minutes} ${time < 720 ? "AM" : "PM"}`);
-        }}
-      >
-        {`${hour}:${minutes}`}
-        <span>{time < 720 ? "AM" : "PM"}</span>
-      </li>
-    );
+              : {}
+          }
+          onClick={() => {
+            setSelectedTime(`${hour}:${minutes} ${time < 720 ? "AM" : "PM"}`);
+          }}
+        >
+          {`${hour}:${minutes}`}
+          <span>{time < 720 ? "AM" : "PM"}</span>
+        </li>
+      );
+    }
   };
 
   //generating the elements by map

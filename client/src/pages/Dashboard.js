@@ -87,15 +87,20 @@ export const Dashboard = () => {
               <label className={dashboard.eventlabel}>
                 Events <TbCalendarEvent />
               </label>
-              <label
-                onClick={() => {
-                  setShowProfile((prev) => !prev);
-                }}
-                className={dashboard.profilelabel}
-              >
-                Profile <CgProfile />
-              </label>
             </div>
+            <label
+              onClick={() => {
+                setShowProfile((prev) => !prev);
+              }}
+              className={dashboard.profilelabel}
+              style={
+                showProfile
+                  ? { backgroundColor: "#f5f5f5", color: "#2962ff" }
+                  : {}
+              }
+            >
+              Profile <CgProfile />
+            </label>
             {showProfile ? (
               <div className={dashboard.profile}>
                 <h2>{userData.name}</h2>
