@@ -57,7 +57,7 @@ export const DashboardEvents = () => {
     setTimeout(() => {
       setProcessing(false);
       setEventsData(events);
-    }, 1000);
+    }, 200);
   };
 
   //hide popups

@@ -10,23 +10,27 @@ import { useNavigate } from "react-router-dom";
 
 import { Welcome } from "../components/Welcome";
 import { DashboardEvents } from "../components/DashboardEvents";
-import { Profile } from "../components/Profile";
 
 export const Dashboard = () => {
-  const [navigation, setNavigate] = useState("events"); //navigate state for change components
+  const [showProfile, setShowProfile] = useState(false); //navigate state for change components
   const [showWelcome, setShowWelcome] = useState(true); //welcome state
   const [popup, showPopup] = useState(false); //popup state
+  const [userData, setUserData] = useState({}); //user data
 
   const navigate = useNavigate(); //navigate router
 
   //useeffect
   useEffect(() => {
     showPage();
+    fetchUserData();
   }, []);
 
-  //to change components between events & profiles
-  const handleNavigate = (e) => {
-    setNavigate(e.target.value);
+  //fetching the user data
+  const fetchUserData = async () => {
+    var email = await JSON.parse(sessionStorage.getItem("email"));
+    axios.get(`/api/account/user/${email}`).then((res) => {
+      setUserData(res.data.data.Items[0]);
+    });
   };
 
   //change the page
@@ -80,28 +84,24 @@ export const Dashboard = () => {
               <p>Bookly</p>
             </div>
             <div className={dashboard.nav}>
-              <input
-                type="radio"
-                name="navigation"
-                id="events"
-                value="events"
-                defaultChecked
-                onChange={handleNavigate}
-              />
-              <label htmlFor="events">
+              <label className={dashboard.eventlabel}>
                 Events <TbCalendarEvent />
               </label>
-              <input
-                type="radio"
-                name="navigation"
-                id="profile"
-                value="profile"
-                onChange={handleNavigate}
-              />
-              <label htmlFor="profile">
+              <label
+                onClick={() => {
+                  setShowProfile((prev) => !prev);
+                }}
+                className={dashboard.profilelabel}
+              >
                 Profile <CgProfile />
               </label>
             </div>
+            {showProfile ? (
+              <div className={dashboard.profile}>
+                <h2>{userData.name}</h2>
+                <h4>{userData.email}</h4>
+              </div>
+            ) : null}
             <button
               onClick={() => {
                 showPopup(true);
@@ -111,7 +111,7 @@ export const Dashboard = () => {
             </button>
           </div>
           <div className={dashboard.container}>
-            {navigation === "events" ? <DashboardEvents /> : <Profile />}
+            <DashboardEvents />
           </div>
         </>
       )}

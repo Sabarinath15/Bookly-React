@@ -77,6 +77,7 @@ export const Login = (props) => {
             var getPassword = res.data.data.Items[0].password;
             if (inputs.password === getPassword) {
               sessionStorage.setItem('userId', JSON.stringify(res.data.data.Items[0].id));
+              sessionStorage.setItem('email', JSON.stringify(res.data.data.Items[0].email));
               setWarning({});
               navigate("/dashboard");
             } else {

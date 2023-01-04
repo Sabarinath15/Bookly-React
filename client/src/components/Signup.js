@@ -95,6 +95,7 @@ export const Signup = (props) => {
             "password": inputs.password,
           }).then((res) => {
             sessionStorage.setItem('userId', JSON.stringify(res.data.data.Items[0].id));
+            sessionStorage.setItem('email', JSON.stringify(res.data.data.Items[0].email));
             setProcessing(false);
             setWarning({});
             navigate("/dashboard");
