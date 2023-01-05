@@ -189,8 +189,8 @@ export const DateTime = ({ handleStep, eventDetails, saveDateTime }) => {
           key={time}
           style={{
             color: "#2962ff",
-            fontWeight: "600",
-            backgroundColor: "#E3F2FD",
+            fontWeight: "400",
+            backgroundColor: "#F5F5F5",
             pointerEvents: "none"
           }}
         >
