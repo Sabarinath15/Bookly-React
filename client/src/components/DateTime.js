@@ -188,14 +188,13 @@ export const DateTime = ({ handleStep, eventDetails, saveDateTime, dateTime }) =
         <li
           key={time}
           style={{
-            color: "#2962ff",
-            fontWeight: "400",
-            backgroundColor: "#F5F5F5",
+            color: "#BDBDBD",
+            fontWeight: "300",
             pointerEvents: "none"
           }}
         >
           {`${hour}:${minutes}`}
-          <span>{time < 720 ? "AM" : "PM"}</span>
+          <span style={{ color: "#BDBDBD" }}>{time < 720 ? "AM" : "PM"}</span>
         </li>
       );
     } else {

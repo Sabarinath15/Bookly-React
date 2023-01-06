@@ -456,7 +456,7 @@
   list-style: none;
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--text);
+  color: var(--primary-color);
   width: 120px;
   height: 40px;
   text-align: center;
