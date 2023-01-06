@@ -8,7 +8,7 @@ AWS.config.update({
 //var dynamoDb = new AWS.DynamoDB(); //dynamodb instance
 
 
-// //User table creation
+//User table creation
 
 // var params = {
 
