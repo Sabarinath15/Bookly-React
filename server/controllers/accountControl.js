@@ -17,8 +17,8 @@ const createUser = async (req, res) => { //create user in db
             },
         };
 
-        await createItem(params); //create user by calling doc client method
-        res.status(201).json({ id });
+        var data = await createItem(params); //create user by calling doc client method
+        res.status(201).json(params.Item);
 
     } catch (error) {
         res.status(500).json({ msg: error });

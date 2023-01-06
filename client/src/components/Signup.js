@@ -88,14 +88,15 @@ export const Signup = (props) => {
       setProcessing(true);
       try {
         var haveAcc = await axios.get(`/api/account/check/${inputs.email}`);
-        if (!haveAcc) {
+        haveAcc = haveAcc.data.have;
+        if (haveAcc === false) {
           axios.post('/api/account/create', {
             "name": inputs.name,
             "email": inputs.email,
             "password": inputs.password,
           }).then((res) => {
-            sessionStorage.setItem('userId', JSON.stringify(res.data.data.Items[0].id));
-            sessionStorage.setItem('email', JSON.stringify(res.data.data.Items[0].email));
+            sessionStorage.setItem('userId', JSON.stringify(res.data.id));
+            sessionStorage.setItem('email', JSON.stringify(res.data.email));
             setProcessing(false);
             setWarning({});
             navigate("/dashboard");
