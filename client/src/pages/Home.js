@@ -1,5 +1,7 @@
 import "../styles/homePage.css";
+
 import { Link } from "react-router-dom";
+//icons
 import { FiArrowRight } from "react-icons/fi";
 
 export const Home = () => {

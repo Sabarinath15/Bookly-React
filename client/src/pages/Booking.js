@@ -2,8 +2,10 @@ import style from "../styles/booking.module.css";
 
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { TailSpin } from "react-loader-spinner";
 import axios from "axios";
+
+//processing spinner
+import { TailSpin } from "react-loader-spinner";
 
 import { BookingProcess } from "../components/BookingProcess";
 

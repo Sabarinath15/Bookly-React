@@ -1,5 +1,5 @@
 import dashboard from "../styles/dashboard.module.css";
-
+//icons
 import { FiLogOut } from "react-icons/fi";
 import { TbCalendarEvent } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";

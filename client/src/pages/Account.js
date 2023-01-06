@@ -1,9 +1,10 @@
 import accountCss from "../styles/accountPage.module.css";
+
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import { Login } from "../components/Login";
 import { Signup } from "../components/Signup";
-import { useState } from "react";
 
 export const Account = () => {
   const [isLogin, setform] = useState(true);

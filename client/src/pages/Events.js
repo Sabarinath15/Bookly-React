@@ -1,5 +1,6 @@
 import eventStyle from "../styles/event.module.css";
 
+//icons and processing spinner
 import { TailSpin } from "react-loader-spinner";
 import { FiSearch } from "react-icons/fi";
 
