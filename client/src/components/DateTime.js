@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-export const DateTime = ({ handleStep, eventDetails, saveDateTime }) => {
+export const DateTime = ({ handleStep, eventDetails, saveDateTime, dateTime }) => {
   var event = eventDetails.event;
   const months = [
     "January",
@@ -32,9 +32,9 @@ export const DateTime = ({ handleStep, eventDetails, saveDateTime }) => {
   const [date, setDate] = useState(new Date()); //date state
   const [dateArray, setDateArray] = useState([]); //month date array for generate calendar
   const [endDate, setEndDate] = useState(new Date()); //end date of the event
-  const [selectedDate, setSelectedDate] = useState(0); //selected date of the calendar
+  const [selectedDate, setSelectedDate] = useState(new Date(dateTime.date).getDate() || 0); //selected date of the calendar
   const [timeArray, setTimeArray] = useState([]); //slots time array for gen. slots
-  const [selectedTime, setSelectedTime] = useState(""); //seleced time of the slots
+  const [selectedTime, setSelectedTime] = useState(dateTime.time || ""); //seleced time of the slots
   const [bookedSlots, setBookedSlots] = useState([]); //booked slots of the selected day
 
   //generate date

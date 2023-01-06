@@ -149,8 +149,8 @@ export const BookingProcess = ({ event }) => {
           </div>
         </div>
         <div className={style.mainContainer}>
-          {steps === "DateTime" && <DateTime eventDetails={event} handleStep={handleStep} saveDateTime={saveDateTime} />}
-          {steps === "CustomerDetails" && <CustomerDetails handleStep={handleStep} saveCustomerDetails={saveCustomerDetails} />}
+          {steps === "DateTime" && <DateTime eventDetails={event} handleStep={handleStep} saveDateTime={saveDateTime} dateTime={dateTime} />}
+          {steps === "CustomerDetails" && <CustomerDetails handleStep={handleStep} saveCustomerDetails={saveCustomerDetails} details={customerDetails} />}
           {steps === "Confirm" && (
             <div className={style.outer}>
               <div className={style.Confirm}>{confirmStatus === "" ? <ConfirmBooking dateTime={dateTime} customerDetails={customerDetails} /> : confirmStatus === "success" ? (<div className={style.success}>

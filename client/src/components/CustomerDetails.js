@@ -2,11 +2,11 @@ import style from "../styles/booking.module.css";
 
 import { useState } from "react";
 
-export const CustomerDetails = ({ handleStep, saveCustomerDetails }) => {
+export const CustomerDetails = ({ handleStep, saveCustomerDetails, details }) => {
   const [inputs, setInputs] = useState({
-    email: "",
-    name: "",
-    mobileNumber: "",
+    email: details.email || "",
+    name: details.name || "",
+    mobileNumber: details.mobileNumber || "",
   }); //input state
   const [errors, setErrors] = useState({}); //error state
 
@@ -95,6 +95,7 @@ export const CustomerDetails = ({ handleStep, saveCustomerDetails }) => {
             type="text"
             name="name"
             placeholder="Name"
+            value={inputs.name || ""}
             onChange={handleInputs}
           />
           <span>{errors.nameError || ""}</span>
@@ -102,6 +103,7 @@ export const CustomerDetails = ({ handleStep, saveCustomerDetails }) => {
             type="text"
             name="email"
             placeholder="Email address"
+            value={inputs.email || ""}
             onChange={handleInputs}
           />
           <span>{errors.emailError || ""}</span>
@@ -109,6 +111,7 @@ export const CustomerDetails = ({ handleStep, saveCustomerDetails }) => {
             type="text"
             name="mobileNumber"
             placeholder="Contact number"
+            value={inputs.mobileNumber || ""}
             onChange={handleInputs}
           />
           <span>{errors.mobileNumberError || ""}</span>
