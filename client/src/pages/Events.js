@@ -28,11 +28,9 @@ export const Events = () => {
     try {
       axios.get("/api/events/").then((res) => {
         filterEvents(res.data.data.Items);
-      });
-      setTimeout(() => {
         setProcessing(false);
         setError(false);
-      }, 1000);
+      });
     } catch (error) {
       console.log(error);
       setProcessing(false);
@@ -57,8 +55,8 @@ export const Events = () => {
   //filter the events by remove finished events
   const filterEvents = (events) => {
     var filtered = events.filter(item => {
-      var enddate = getEndDate(item.event.date, item.event.days);
-      return enddate > new Date();
+      var endDate = getEndDate(item.date, item.days);
+      return endDate > new Date();
     });
     setEvents(filtered);
   }
@@ -68,7 +66,7 @@ export const Events = () => {
     var keyword = e.target.value;
     if (keyword !== "") {
       var temp = events.filter((item) =>
-        item.event.name.toLowerCase().startsWith(keyword.toLowerCase())
+        item.name.toLowerCase().startsWith(keyword.toLowerCase())
       );
       setSearchResult(temp);
     } else {

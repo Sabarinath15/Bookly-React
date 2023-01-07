@@ -11,13 +11,10 @@ const {
 const createEvent = async (req, res) => {
     try {
         var id = uuidv4();
+        req = { ...req.body, "id": id };
         var params = {
             TableName: 'Events',
-            Item: {
-                "id": id,
-                "userId": req.body.userId,
-                "event": req.body,
-            }
+            Item: req,
         }
 
         await createItem(params);

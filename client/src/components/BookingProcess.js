@@ -11,7 +11,6 @@ import { CustomerDetails } from "./CustomerDetails";
 import { ConfirmBooking } from "./ConfirmBooking";
 
 export const BookingProcess = ({ event }) => {
-  const details = event.event;
   const months = [
     "Jan",
     "Feb",
@@ -42,14 +41,14 @@ export const BookingProcess = ({ event }) => {
 
   //get end date
   const getEndDate = () => {
-    var startDate = new Date(details.date);
+    var startDate = new Date(event.date);
     startDate = new Date(
       startDate.getFullYear(),
       startDate.getMonth(),
       startDate.getDate()
     );
     var milisec =
-      parseInt(details.days) * 1000 * 3600 * 24 + startDate.getTime();
+      parseInt(event.days) * 1000 * 3600 * 24 + startDate.getTime();
     var endDate = new Date(milisec);
     return `${new Date(endDate).getDate()} ${months[new Date(endDate).getMonth()]
       } ${new Date(endDate).getFullYear()}`;
@@ -71,14 +70,15 @@ export const BookingProcess = ({ event }) => {
   //confirm booking
   const confirmBooking = () => {
     setProcessing(true);
-    axios.post('/api/slots/create', {
+    axios.post('/api/bookings/create', {
       "eventId": event.id,
       "userId": event.userId,
       "name": customerDetails.name,
       "email": customerDetails.email,
       "mobileNumber": customerDetails.mobileNumber,
-      "date": dateTime.date,
+      "date": new Date(dateTime.date).getTime(),
       "time": dateTime.time,
+      "createdOn": Date.now(),
     }).then(res => {
       setConfirmStatus("success");
       setProcessing(false);
@@ -95,25 +95,25 @@ export const BookingProcess = ({ event }) => {
       <div className={style.detail}>
         <div className={style.title}>
           <p>Bookly</p>
-          <h2>{details.name}</h2>
+          <h2>{event.name}</h2>
         </div>
         <div className={style.mode}>
-          {details.meetType === "online" ? (
+          {event.meetType === "online" ? (
             <p style={{ color: "#00c853" }}>Online</p>
           ) : (
             <p style={{ color: "#FF3D00" }}>Offline</p>
           )}
         </div>
-        {details.description && (
+        {event.description && (
           <div className={style.about}>
             <h4>About</h4>
-            <p>{details.description}</p>
+            <p>{event.description}</p>
           </div>
         )}
         <div className={style.others}>
           <div>
             <h4>Duration</h4>
-            <p>{`${details.duration} ${details.durationFormat}`}</p>
+            <p>{`${event.duration} ${event.durationFormat}`}</p>
           </div>
           <div>
             <h4>Available till</h4>
@@ -125,7 +125,7 @@ export const BookingProcess = ({ event }) => {
             <span>
               <BiBuildings />
             </span>
-            {details.orgName || ""}
+            {event.orgName || ""}
           </p>
         </div>
       </div>
@@ -149,7 +149,7 @@ export const BookingProcess = ({ event }) => {
           </div>
         </div>
         <div className={style.mainContainer}>
-          {steps === "DateTime" && <DateTime eventDetails={event} handleStep={handleStep} saveDateTime={saveDateTime} dateTime={dateTime} />}
+          {steps === "DateTime" && <DateTime event={event} handleStep={handleStep} saveDateTime={saveDateTime} dateTime={dateTime} />}
           {steps === "CustomerDetails" && <CustomerDetails handleStep={handleStep} saveCustomerDetails={saveCustomerDetails} details={customerDetails} />}
           {steps === "Confirm" && (
             <div className={style.outer}>

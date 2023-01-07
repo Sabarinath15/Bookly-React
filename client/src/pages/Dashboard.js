@@ -39,7 +39,7 @@ export const Dashboard = () => {
     axios
       .get(`/api/events/${userId}`)
       .then((res) => {
-        if (res.data.data.Items.length !== 0) {
+        if (res.data.data.Count !== 0) {
           setShowWelcome(false);
         }
       })

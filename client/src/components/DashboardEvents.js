@@ -48,9 +48,9 @@ export const DashboardEvents = () => {
   //sort the events
   const sortEvent = (items) => {
     var events = items.sort((val1, val2) =>
-      val1.event.date > val2.event.date
+      val1.date > val2.date
         ? 1
-        : val1.event.date < val2.event.date
+        : val1.date < val2.date
           ? -1
           : 0
     );
@@ -79,7 +79,7 @@ export const DashboardEvents = () => {
   const deleteEvent = () => {
     setDeleteProcess(true);
     try {
-      axios.get(`/api/slots/${eventId}`).then(async (res) => {
+      axios.get(`/api/bookings/${eventId}`).then(async (res) => {
         if (res.data.data.Count === 0) {
           var userId = await JSON.parse(sessionStorage.getItem("userId"));
           axios.delete(`/api/events/event/${eventId}&${userId}`).then((res) => {
@@ -115,11 +115,11 @@ export const DashboardEvents = () => {
       axios.get(`/api/events/event/${eventId}&${userId}`).then((res) => {
         setEventDetails(res.data.data.Item);
       });
-      axios.get(`/api/slots/${eventId}`).then((res) => {
+      axios.get(`/api/bookings/${eventId}`).then((res) => {
         var slots = res.data.data.Items.sort((val1, val2) =>
-          new Date(val1.slot.date) > new Date(val2.slot.date)
+          new Date(val1.date) > new Date(val2.date)
             ? 1
-            : new Date(val1.slot.date) < new Date(val2.slot.date)
+            : new Date(val1.date) < new Date(val2.date)
               ? -1
               : 0
         );

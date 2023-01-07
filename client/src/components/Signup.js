@@ -94,6 +94,7 @@ export const Signup = (props) => {
             "name": inputs.name,
             "email": inputs.email,
             "password": inputs.password,
+            "createdOn": Date.now(),
           }).then((res) => {
             sessionStorage.setItem('userId', JSON.stringify(res.data.id));
             sessionStorage.setItem('email', JSON.stringify(res.data.email));

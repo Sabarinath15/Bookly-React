@@ -20,9 +20,9 @@ export const CreateForm = ({ setCreated }) => {
       var userId = await JSON.parse(sessionStorage.getItem("userId"));
       var eventId = await JSON.parse(sessionStorage.getItem("eventId"));
       axios.get(`/api/events/event/${eventId}&${userId}`).then((res) => {
-        setInputs(res.data.data.Item.event);
+        setInputs(res.data.data.Item);
         setEditable(true);
-        res.data.data.Item.event.meetType === "offline"
+        res.data.data.Item.meetType === "offline"
           ? setType(true)
           : setType(false);
       });
@@ -34,6 +34,7 @@ export const CreateForm = ({ setCreated }) => {
   //states
   const [inputs, setInputs] = useState({
     userId: JSON.parse(sessionStorage.getItem("userId")),
+    createdOn: Date.now(),
     name: "",
     duration: "",
     durationFormat: "Hour",
@@ -91,8 +92,14 @@ export const CreateForm = ({ setCreated }) => {
       }
     }
 
-    //get week days
-    if (keyName === "weekDays") {
+    //date convertion
+    if (keyName === "date") {
+      setInputs((prev) => ({
+        ...prev,
+        [keyName]: Math.floor(new Date(value).getTime()),
+      }));
+    } else if (keyName === "weekDays") {
+      //get week days
       const checked = e.target.checked;
       if (checked) {
         weeks = [...weeks, value];
@@ -247,6 +254,18 @@ export const CreateForm = ({ setCreated }) => {
     }
   };
 
+  //format date
+  const formatDate = (dateValue) => {
+    var date = new Date(dateValue);
+    //get the year, month, date
+    var year = date.toLocaleString("default", { year: "numeric" });
+    var month = date.toLocaleString("default", { month: "2-digit" });
+    var day = date.toLocaleString("default", { day: "2-digit" });
+    // Generate yyyy-mm-dd date string
+    var formattedDate = year + "-" + month + "-" + day;
+    return formattedDate;
+  };
+
   //submit forms
   const formSubmit = async (e) => {
     e.preventDefault();
@@ -330,7 +349,7 @@ export const CreateForm = ({ setCreated }) => {
                 placeholder="Start Date"
                 className={create.dateIp}
                 onChange={handleInputs}
-                value={inputs.date || ""}
+                value={inputs.date === "" ? "" : formatDate(inputs.date)}
               />
               <p>Start date of he event.</p>
               <span>{errors.dateError || ""}</span>

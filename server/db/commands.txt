@@ -11,3 +11,7 @@ aws configure
 3. Listing tables in DB
 
 aws dynamodb list-tables --endpoint-url http://localhost:8000
+
+4. Deleting the tables
+
+aws dynamodb delete-table --table-name

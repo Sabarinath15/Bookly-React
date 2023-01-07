@@ -3,7 +3,7 @@ const app = express();
 
 const account = require('./routers/account'); //router for accounts login and signup
 const event = require('./routers/event'); //router for events
-const slots = require('./routers/slot'); //slots router
+const slots = require('./routers/booking'); //slots router
 
 //port
 const port = process.env.PORT || 4000;
@@ -22,4 +22,4 @@ app.use(express.json());
 //routers
 app.use('/api/account', account);
 app.use('/api/events', event);
-app.use('/api/slots', slots);
+app.use('/api/bookings', slots);

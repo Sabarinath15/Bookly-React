@@ -18,28 +18,27 @@ export const Slots = ({ details }) => {
     "Nov",
     "Dec",
   ];
-  var date = new Date(details.slot.date);
+  var date = new Date(details.date);
 
   return (
     <div className={style.slot}>
       <div className={style.user}>
         <div className={style.name}>
-          <p>{details.slot.name}</p>
+          <p>{details.name}</p>
         </div>
         <div className={style.contact}>
-          <a href={`tel:+${details.slot.mobileNumber}`}>
+          <a href={`tel:+${details.mobileNumber}`}>
             <IoIosCall />
           </a>
-          <a href={`mailto:${details.slot.email}`}>
+          <a href={`mailto:${details.email}`}>
             <MdEmail />
           </a>
         </div>
       </div>
       <div className={style.usertime}>
-        <h2>{details.slot.time}</h2>
-        <h4>{`${date.getDate()} ${
-          months[date.getMonth()]
-        } ${date.getFullYear()}`}</h4>
+        <h2>{details.time}</h2>
+        <h4>{`${date.getDate()} ${months[date.getMonth()]
+          } ${date.getFullYear()}`}</h4>
       </div>
     </div>
   );

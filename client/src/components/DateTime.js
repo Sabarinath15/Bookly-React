@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-export const DateTime = ({ handleStep, eventDetails, saveDateTime, dateTime }) => {
-  var event = eventDetails.event;
+export const DateTime = ({ handleStep, event, saveDateTime, dateTime }) => {
   const months = [
     "January",
     "February",
@@ -163,10 +162,10 @@ export const DateTime = ({ handleStep, eventDetails, saveDateTime, dateTime }) =
   const fetchBookedSlots = async (dateValue) => {
     var tempDate = new Date(date.getFullYear(), date.getMonth(), dateValue);
     var tempArray = [];
-    axios.get(`/api/slots/${eventDetails.id}`).then(res => {
+    axios.get(`/api/bookings/${event.id}`).then(res => {
       tempArray = res.data.data.Items.map(item => {
-        if (tempDate.toDateString() === new Date(item.slot.date).toDateString()) {
-          return item.slot.time;
+        if (tempDate.toDateString() === new Date(item.date).toDateString()) {
+          return item.time;
         } else {
           return null;
         }

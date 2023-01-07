@@ -8,7 +8,7 @@ import {
 } from "react-icons/bs";
 
 export const EventDetails = ({ eventDetails, hideDetails }) => {
-  var details = eventDetails.event;
+
   const months = [
     "Jan",
     "Feb",
@@ -25,13 +25,12 @@ export const EventDetails = ({ eventDetails, hideDetails }) => {
   ];
 
   //generate days and timing
-  const DaysTiming = details.weekDays.map((item) => {
+  const DaysTiming = eventDetails.weekDays.map((item) => {
     return (
       <div className={dashboard.day} key={item}>
         <p>{item.substring(0, 3)}</p>
-        <span className={dashboard.time}>{`${
-          details.timing[item.substring(0, 3)].start
-        } - ${details.timing[item.substring(0, 3)].end}`}</span>
+        <span className={dashboard.time}>{`${eventDetails.timing[item.substring(0, 3)].start
+          } - ${eventDetails.timing[item.substring(0, 3)].end}`}</span>
       </div>
     );
   });
@@ -40,8 +39,8 @@ export const EventDetails = ({ eventDetails, hideDetails }) => {
     <div className={dashboard.container1}>
       <div className={dashboard.detail1}>
         <div>
-          <h3>{details.name}</h3>
-          <p>{details.meetType}</p>
+          <h3>{eventDetails.name}</h3>
+          <p>{eventDetails.meetType}</p>
         </div>
         <button
           onClick={() => {
@@ -57,35 +56,34 @@ export const EventDetails = ({ eventDetails, hideDetails }) => {
             <span>
               <BsFillCalendarEventFill />
             </span>
-            {`${new Date(details.date).getDate()} ${
-              months[new Date(details.date).getMonth()]
-            } ${new Date(details.date).getFullYear()}`}
+            {`${new Date(eventDetails.date).getDate()} ${months[new Date(eventDetails.date).getMonth()]
+              } ${new Date(eventDetails.date).getFullYear()}`}
           </p>
           <p>
             <span>
               <BsFillClockFill />
             </span>
-            {`${details.duration} ${details.durationFormat}`}
+            {`${eventDetails.duration} ${eventDetails.durationFormat}`}
           </p>
           <p>
             <span>
               <BsCalendar2Fill />
             </span>
-            {`${details.days} Days`}
+            {`${eventDetails.days} Days`}
           </p>
         </div>
         <div className={dashboard.description}>
           <h4>About</h4>
           <p>
-            {details.description || "There is no descriptions about the event."}
+            {eventDetails.description || "There is no descriptions about the event."}
           </p>
         </div>
         <div className={dashboard.venue}>
-          <h4>{details.meetType === "online" ? "Meet Link" : "Address"}</h4>
+          <h4>{eventDetails.meetType === "online" ? "Meet Link" : "Address"}</h4>
           <p>
-            {details.meetType === "online"
-              ? details.meetlink
-              : `${details.address1}, ${details.address2}, ${details.address3}, ${details.address4}, ${details.address5}.`}
+            {eventDetails.meetType === "online"
+              ? eventDetails.meetlink
+              : `${eventDetails.address1}, ${eventDetails.address2}, ${eventDetails.address3}, ${eventDetails.address4}, ${eventDetails.address5}.`}
           </p>
         </div>
       </div>

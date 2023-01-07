@@ -14,7 +14,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const AdminEvents = ({ event, showDelete, showDetails, clicked }) => {
-  const details = event.event; //assigning the events to details
   const months = [
     "Jan",
     "Feb",
@@ -45,7 +44,7 @@ export const AdminEvents = ({ event, showDelete, showDetails, clicked }) => {
   //fetch the count of slots
   const fetchCount = () => {
     try {
-      axios.get(`/api/slots/${event.id}`).then((res) => {
+      axios.get(`/api/bookings/${event.id}`).then((res) => {
         setCount(res.data.data.Count);
       });
     } catch (error) {
@@ -55,14 +54,14 @@ export const AdminEvents = ({ event, showDelete, showDetails, clicked }) => {
 
   //show the event details for the event
   const eventStatus = () => {
-    var startDate = new Date(details.date);
+    var startDate = new Date(event.date);
     startDate = new Date(
       startDate.getFullYear(),
       startDate.getMonth(),
       startDate.getDate()
     );
     var milisec =
-      parseInt(details.days) * 1000 * 3600 * 24 + startDate.getTime();
+      parseInt(event.days) * 1000 * 3600 * 24 + startDate.getTime();
     var endDate = new Date(milisec);
 
     if (startDate > new Date()) {
@@ -102,8 +101,8 @@ export const AdminEvents = ({ event, showDelete, showDetails, clicked }) => {
     <div className={dashboard.event} style={clicked ? { backgroundColor: "#F5F5F5", boxShadow: "none" } : {}}>
       <div className={dashboard.top}>
         <div className={dashboard.titleinfo}>
-          <h3>{details.name}</h3>
-          {details.meetType === "online" ? <p>Online</p> : <p>Offline</p>}
+          <h3>{event.name}</h3>
+          {event.meetType === "online" ? <p>Online</p> : <p>Offline</p>}
         </div>
         <div className={dashboard.options}>
           <button
@@ -143,14 +142,14 @@ export const AdminEvents = ({ event, showDelete, showDetails, clicked }) => {
             <span>
               <BsFillClockFill />
             </span>
-            {`${details.duration} ${details.durationFormat}`}
+            {`${event.duration} ${event.durationFormat}`}
           </p>
           <p>
             <span>
               <BsFillCalendarEventFill />
             </span>
-            {`${new Date(details.date).getDate()} ${months[new Date(details.date).getMonth()]
-              } ${new Date(details.date).getFullYear()}`}
+            {`${new Date(event.date).getDate()} ${months[new Date(event.date).getMonth()]
+              } ${new Date(event.date).getFullYear()}`}
           </p>
           <p>
             <span>

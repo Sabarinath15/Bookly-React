@@ -5,124 +5,124 @@ AWS.config.update({
     endpoint: 'http://localhost:8000',
 });
 
-//var dynamoDb = new AWS.DynamoDB(); //dynamodb instance
+var dynamoDb = new AWS.DynamoDB(); //dynamodb instance
 
 
 //User table creation
 
-// var params = {
+var params = {
 
-//     TableName: 'User',
-//     KeySchema: [
-//         {
-//             AttributeName: 'email', //partition key
-//             KeyType: 'HASH',
-//         },
-//         {
-//             AttributeName: 'id', //sort key
-//             KeyType: 'RANGE',
-//         },
-//     ],
-//     AttributeDefinitions: [
-//         {
-//             AttributeName: 'email',
-//             AttributeType: 'S',
-//         },
-//         {
-//             AttributeName: 'id',
-//             AttributeType: 'S',
-//         }
-//     ],
-//     ProvisionedThroughput: {
-//         ReadCapacityUnits: 10,
-//         WriteCapacityUnits: 10,
-//     },
-// };
+    TableName: 'User',
+    KeySchema: [
+        {
+            AttributeName: 'email', //partition key
+            KeyType: 'HASH',
+        },
+        {
+            AttributeName: 'id', //sort key
+            KeyType: 'RANGE',
+        },
+    ],
+    AttributeDefinitions: [
+        {
+            AttributeName: 'email',
+            AttributeType: 'S',
+        },
+        {
+            AttributeName: 'id',
+            AttributeType: 'S',
+        }
+    ],
+    ProvisionedThroughput: {
+        ReadCapacityUnits: 10,
+        WriteCapacityUnits: 10,
+    },
+};
 
-// dynamoDb.createTable(params, (err, data) => {
-//     if (err) {
-//         console.log('Unable to create the table. Error : ', JSON.stringify(err, null, 2));
-//     } else {
-//         console.log('User Table created successfully... ');
-//     }
-// });
+dynamoDb.createTable(params, (err, data) => {
+    if (err) {
+        console.log('Unable to create the table. Error : ', JSON.stringify(err, null, 2));
+    } else {
+        console.log('User Table created successfully... ');
+    }
+});
 
 
 //Events table creation
 
-// var params = {
+var params = {
 
-//     TableName: 'Events',
-//     KeySchema: [
-//         {
-//             AttributeName: 'userId', //primary key
-//             KeyType: 'HASH',
-//         },
-//         {
-//             AttributeName: 'id', //sort key
-//             KeyType: 'RANGE',
-//         }
-//     ],
-//     AttributeDefinitions: [
-//         {
-//             AttributeName: 'userId',
-//             AttributeType: 'S',
-//         },
-//         {
-//             AttributeName: 'id',
-//             AttributeType: 'S',
-//         },
-//     ],
-//     ProvisionedThroughput: {
-//         ReadCapacityUnits: 10,
-//         WriteCapacityUnits: 10,
-//     },
-// };
+    TableName: 'Events',
+    KeySchema: [
+        {
+            AttributeName: 'userId', //primary key
+            KeyType: 'HASH',
+        },
+        {
+            AttributeName: 'id', //sort key
+            KeyType: 'RANGE',
+        }
+    ],
+    AttributeDefinitions: [
+        {
+            AttributeName: 'userId',
+            AttributeType: 'S',
+        },
+        {
+            AttributeName: 'id',
+            AttributeType: 'S',
+        },
+    ],
+    ProvisionedThroughput: {
+        ReadCapacityUnits: 10,
+        WriteCapacityUnits: 10,
+    },
+};
 
-// dynamoDb.createTable(params, (err, data) => {
-//     if (err) {
-//         console.log('Unable to create the table. Error : ', JSON.stringify(err, null, 2));
-//     } else {
-//         console.log('Events Table created successfully... ');
-//     }
-// });
+dynamoDb.createTable(params, (err, data) => {
+    if (err) {
+        console.log('Unable to create the table. Error : ', JSON.stringify(err, null, 2));
+    } else {
+        console.log('Events Table created successfully... ');
+    }
+});
 
 
-//Slots table creation
+//Bookings table creation
 
-// var params = {
+var params = {
 
-//     TableName: 'Slots',
-//     KeySchema: [
-//         {
-//             AttributeName: 'eventId', //primary key
-//             KeyType: 'HASH',
-//         },
-//         {
-//             AttributeName: 'id', //sort key
-//             KeyType: 'RANGE',
-//         },
-//     ],
-//     AttributeDefinitions: [
-//         {
-//             AttributeName: 'eventId',
-//             AttributeType: 'S',
-//         },
-//         {
-//             AttributeName: 'id',
-//             AttributeType: 'S',
-//         },
-//     ],
-//     ProvisionedThroughput: {
-//         ReadCapacityUnits: 10,
-//         WriteCapacityUnits: 10,
-//     },
-// };
+    TableName: 'Bookings',
+    KeySchema: [
+        {
+            AttributeName: 'eventId', //primary key
+            KeyType: 'HASH',
+        },
+        {
+            AttributeName: 'id', //sort key
+            KeyType: 'RANGE',
+        },
+    ],
+    AttributeDefinitions: [
+        {
+            AttributeName: 'eventId',
+            AttributeType: 'S',
+        },
+        {
+            AttributeName: 'id',
+            AttributeType: 'S',
+        },
+    ],
+    ProvisionedThroughput: {
+        ReadCapacityUnits: 10,
+        WriteCapacityUnits: 10,
+    },
+};
 
-// dynamoDb.createTable(params, (err, data) => {
-//     if (err) {
-//         console.log('Unable to create the table. Error : ', JSON.stringify(err, null, 2));
-//     } else {
-//         console.log('Slots Table created successfully... ');
-//     }
-// });
+dynamoDb.createTable(params, (err, data) => {
+    if (err) {
+        console.log('Unable to create the table. Error : ', JSON.stringify(err, null, 2));
+    } else {
+        console.log('Bookings Table created successfully... ');
+    }
+});
